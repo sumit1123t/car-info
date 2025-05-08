@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi-Section Info Site</title>
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(to right, #e0f7fa, #ffe0f0);
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      background-color: #333;
+    }
+
+    .nav button {
+      padding: 14px 20px;
+      margin: 0;
+      border: none;
+      background-color: #333;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .nav button:hover {
+      background-color: #555;
+    }
+
+    .section {
+      display: none;
+      padding: 20px;
+    }
+
+    .active {
+      display: block;
+    }
+
+    header {
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), 
+        url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      color: white;
+      padding: 30px 20px;
+    }
+
+    header h1 {
+      font-size: 2.7em;
+      margin: 0;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      background: #87ceeb;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .search-bar {
+      margin: 20px 0;
+    }
+
+    .search-bar input[type="text"] {
+      padding: 10px;
+      width: 70%;
+      max-width: 400px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-right: 10px;
+    }
+
+    .search-bar button {
+      padding: 10px 15px;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #1976d2;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      margin: 7px;
+      padding: 15px 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      flex: 1 0 150px;
+      max-width: 150px;
+    }
+
+    .buttons button:hover {
+      background-color: #45a049;
+    }
+
+    .car-info img {
+      max-width: 60%;
+      height: auto;
+      border-radius: 6px;
+      margin: 10px 0;
+      animation: imageZoomFade 1.8s ease-in-out;
+      animation-fill-mode: both;
+    }
+
+    .car-info {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .response-container {
+      background: white;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+
+    textarea {
+      width: 100%;
+      height: 80px;
+      resize: none;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    th {
+      background-color: #f1f1f1;
+    }
+
+    .blinking-text {
+      animation: blink 1s infinite;
+      font-weight: bold;
+      font-size: 29px;
+      margin-top: 20px;
+    }
+
+    @keyframes imageZoomFade {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    footer {
+      background-color: yellow;
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <div class="nav">
+    <button onclick="showSection('food')">Food</button>
+    <button onclick="showSection('car')">Car</button>
+    <button onclick="showSection('sumit ghodke')">Sumit Ghodke</button>
+
+  </div>
+
+  <div id="food" class="section">
+    <h2>Food Section</h2>
+    <p>Explore delicious recipes and nutrition tips on <a href="https://en.wikipedia.org/wiki/Food" target="_blank">Wikipedia Food Page</a>.</p>
+  </div>
+
+  <div id="car" class="section active">
+    <header>
+      <h1>🚗 Car Information Hub 🏁</h1>
+    </header>
+
+    <div class="container">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search on Google...">
+        <button onclick="searchGoogle()">Search Google</button>
+      </div>
+    
+      <div class="buttons" id="carButtons"></div>
+      <div id="carInfo" class="car-info"></div>
+    </div>
+
+    <div class="response-container">
+      <h2>User Response Box</h2>
+      <textarea id="userInput" placeholder="Write your response here..."></textarea>
+      <button onclick="submitResponse()">Submit</button>
+      <table>
+        <thead>
+          <tr><th>Sr. No</th><th>Response</th></tr>
+        </thead>
+        <tbody id="responseBody"></tbody>
+      </table>
+    </div>
+
+    <div class="blinking-text">Thank you for visiting my car website</div>
+  </div>
+
+  <div id="sumit ghodke" class="section">
+    <h2>owner section<h2>
+    <p>I am the owner of the website</p>
+    <p> my gmail: sbghodke07@gmail.com</p>
+    <p> my insa id: itz_simit.g</p></p><a href="sbghodke07@gmail.com" target="_blank">click here to get my gmail</a>.</p>
+  </div>
+
+  <footer>
+    &copy; 2025 Sumit Ghodke Web Developer. All rights reserved.
+  </footer>
+
+ 
+  <script>
+    function showSection(id) {
+      const sections = document.querySelectorAll(".section");
+      sections.forEach(sec => sec.classList.remove("active"));
+      document.getElementById(id).classList.add("active");
+    }
+
+    function searchGoogle() {
+      const query = document.getElementById("searchInput").value;
+      if (query.trim() !== "") {
+        const url = "https://www.google.com/search?q=" + encodeURIComponent(query);
+        window.open(url, "_blank");
+      }
+    }
+
+    const cars = {
+      dodge: {
+        name: "Dodge Charger",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/58/24_Dodge_Charger_Daytona_RT.jpg",
+        description: "Dodge Charger is an iconic American muscle sedan with a bold design and performance-oriented engines.",
+        link: "https://en.wikipedia.org/wiki/Dodge_Charger"
+      },
+      tesla: {
+        name: "Tesla Model S",
+        image: "https://upload.wikimedia.org/wikipedia/commons/9/9e/Tesla_Model_S_%28Facelift_ab_04-2016%29_%28cropped%29.jpg",
+        description: "Tesla Model S is an all-electric luxury sedan known for its performance and technology.",
+        link: "https://en.wikipedia.org/wiki/Tesla_Model_S"
+      },
+      mustang: {
+        name: "Ford Mustang",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/2019_Chevrolet_Camaro_2SS_6.2L_front_3.16.19.jpg",
+        description: "The Ford Mustang is a classic American muscle car with decades of heritage.",
+        link: "https://en.wikipedia.org/wiki/Ford_Mustang"
+      },
+      camaro: {
+        name: "Chevrolet Camaro",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/5e/2019_Chevrolet_Camaro_2SS_6.2L_front_3.16.19.jpg",
+        description: "Chevrolet Camaro offers powerful performance and aggressive styling.",
+        link: "https://en.wikipedia.org/wiki/Chevrolet_Camaro"
+      },
+      civic: {
+        name: "Honda Civic",
+        image: "https://upload.wikimedia.org/wikipedia/commons/1/1a/Honda_Civic_e-HEV_Sport_%28XI%29_%E2%80%93_f_30062024.jpg",
+        description: "Honda Civic is a compact car known for its reliability, fuel efficiency, and value.",
+        link: "https://en.wikipedia.org/wiki/Honda_Civic"
+      },
+       audi: {
+        name: "Audi R8",
+        image: "https://upload.wikimedia.org/wikipedia/commons/d/d2/2018_Audi_R8_Coupe_V10_plus_Front.jpg",
+        description: "Audi R8 is a luxury sports car with extraordinary design and powerful performance.",
+        link: "https://en.wikipedia.org/wiki/Audi_R8"
+      },
+      ferrari: {
+        name: "Ferrari 488 GTB",
+        image: "https://upload.wikimedia.org/wikipedia/commons/3/37/2017_Ferrari_488_GTB_Automatic_3.9.jpg",
+        description: "Ferrari 488 GTB is a mid-engine supercar that combines elegance with extreme performance.",
+        link: "https://en.wikipedia.org/wiki/Ferrari_488"
+      },
+      lamborghini: {
+        name: "Lamborghini Aventador",
+        image: "https://upload.wikimedia.org/wikipedia/commons/b/bb/2023_Lamborghini_Aventador_Ultimae.jpg",
+        description: "Lamborghini Aventador is an iconic luxury supercar with a distinctive V12 engine.",
+        link: "https://en.wikipedia.org/wiki/Lamborghini_Aventador"
+      },
+      porsche: {
+        name: "Porsche 911",
+        image: "https://upload.wikimedia.org/wikipedia/commons/a/a2/Porsche_911_No_1000000%2C_70_Years_Porsche_Sports_Car%2C_Berlin_%281X7A3888%29.jpg",
+        description: "Porsche 911 is a legendary sports car known for its engineering excellence and high-performance handling.",
+        link: "https://en.wikipedia.org/wiki/Porsche_911"
+      },
+      toyota: {
+        name: "Toyota Corolla",
+        image: "https://upload.wikimedia.org/wikipedia/commons/f/fe/Toyota_Corolla_Hybrid_%28E210%29_IMG_4338.jpg",
+        description: "Toyota Corolla is a compact car, highly regarded for its durability and fuel economy.",
+        link: "https://en.wikipedia.org/wiki/Toyota_Corolla"
+      },
+      mazda: {
+        name: "Mazda MX-5 Miata",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/55/Mercedes-Benz_W223_IMG_6663.jpg",
+        description: "Mazda MX-5 Miata is a two-seater sports car that provides exhilarating driving experiences.",
+        link: "https://en.wikipedia.org/wiki/Mazda_MX-5"
+      },
+      nissan: {
+        name: "Nissan GT-R",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/55/Mercedes-Benz_W223_IMG_6663.jpg",
+        description: "Nissan GT-R is a high-performance sports car known for its technological prowess and speed.",
+        link: "https://en.wikipedia.org/wiki/Nissan_GT-R"
+      },
+      mercedes: {
+        name: "Mercedes-Benz S-Class",
+        image: "https://upload.wikimedia.org/wikipedia/commons/5/55/Mercedes-Benz_W223_IMG_6663.jpg",
+        description: "Mercedes-Benz S-Class is the pinnacle of luxury sedans, offering unparalleled comfort and innovation.",
+        link: "https://en.wikipedia.org/wiki/Mercedes-Benz_S-Class"
+      },
+      jaguar: {
+        name: "Jaguar F-Type",
+        image: "https://upload.wikimedia.org/wikipedia/commons/d/d5/2017_Jaguar_F-Type_V6_R-Dynamic_Automatic_3.0_Front.jpg",
+        description: "Jaguar F-Type is a sleek British sports car with powerful performance and a distinctive design.",
+        link: "https://en.wikipedia.org/wiki/Jaguar_F-Type"
+      },
+      subaru: {
+        name: "Subaru WRX STI",
+        image: "https://upload.wikimedia.org/wikipedia/commons/6/68/2022_Subaru_WRX_GT_in_Ceramic_White%2C_front_left_%28NYIAS_2022%29.jpg",
+        description: "Subaru WRX STI is a rally-bred performance car with outstanding all-wheel-drive capabilities.",
+        link: "https://en.wikipedia.org/wiki/Subaru_WRX"
+      },
+      volkswagen: {
+        name: "Volkswagen Golf GTI",
+        image: "https://upload.wikimedia.org/wikipedia/commons/7/78/2020_Volkswagen_Golf_Style_TDi_S-A_2.0.jpg",
+        description: "Volkswagen Golf GTI is a compact hot hatch that blends performance with everyday practicality.",
+        link: "https://en.wikipedia.org/wiki/Volkswagen_Golf_GTI"
+      },
+      kia: {
+        name: "Kia Stinger",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/03/Kia_Stinger_Facelift_IMG_4468.jpg/1920px-Kia_Stinger_Facelift_IMG_4468.jpg",
+        description: "Kia Stinger is a performance-oriented sedan with an elegant design and powerful engines.",
+        link: "https://en.wikipedia.org/wiki/Kia_Stinger"
+      },
+      hyundai: {
+        name: "Hyundai Sonata N",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/2024_Hyundai_Sonata_SEL%2C_front_right.jpg/1920px-2024_Hyundai_Sonata_SEL%2C_front_right.jpg",
+        description: "Hyundai Sonata N is a sport sedan with dynamic styling and high-performance features.",
+        link: "https://en.wikipedia.org/wiki/Hyundai_Sonata"
+      },
+      chrysler: {
+        name: "Chrysler 300",
+        image: "https://upload.wikimedia.org/wikipedia/commons/c/c1/2016_Chrysler_300_Limited_AWD_front_4.22.19.jpg",
+        description: "this is best in build quality",
+        link: "https://en.wikipedia.org/wiki/Chrysler_300"
+      },
+      bmw: {
+        name: "BMW M3",
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/2021_BMW_M3_Competition_Automatic_3.0_Front.jpg/1280px-2021_BMW_M3_Competition_Automatic_3.0_Front.jpg" ,
+        description: "BMW M3 is a high-performance sports sedan from BMW's M division.",
+        link: "https://en.wikipedia.org/wiki/BMW_M3"
+      }
+    };
+
+
+    const buttonsContainer = document.getElementById("carButtons");
+    for (let key in cars) {
+      const btn = document.createElement("button");
+      btn.innerText = cars[key].name;
+      btn.onclick = () => showCar(key);
+      buttonsContainer.appendChild(btn);
+    }
+
+    function showCar(carKey) {
+      const car = cars[carKey];
+      const container = document.getElementById("carInfo");
+      container.innerHTML = `
+        <h2>${car.name}</h2>
+        <img src="${car.image}" alt="${car.name}">
+        <p>${car.description}</p>
+        <a href="${car.link}" target="_blank">Read on Wikipedia</a>
+      `;
+    }
+
+    let responseCount = 0;
+    function submitResponse() {
+      const input = document.getElementById("userInput");
+      const text = input.value.trim();
+      if (text !== "") {
+        responseCount++;
+        const tbody = document.getElementById("responseBody");
+
+        const row = document.createElement("tr");
+        const cellNum = document.createElement("td");
+        const cellText = document.createElement("td");
+
+        cellNum.textContent = responseCount;
+        cellText.textContent = text;
+
+        row.appendChild(cellNum);
+        row.appendChild(cellText);
+        tbody.appendChild(row);
+
+        input.value = "";
+      }
+    }
+  </script>
+</body>
+</html>
+ 
